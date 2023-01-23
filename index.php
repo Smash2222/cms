@@ -2,7 +2,9 @@
 
 spl_autoload_register(function ($className) {
     $path = $className . '.php';
-    require($path);
+    if (is_file($path)) {
+        require($path);
+    }
 });
 
 $core = \core\Core::getInstance();
