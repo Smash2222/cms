@@ -8,11 +8,15 @@ class Core
 {
     private static $instance = null;
     public $app = [];
-    public $db;
+    public $pageParams;
+    public DB $db;
+    public $requestMethod;
 
     private function __construct()
     {
+        global $pageParams;
         $this->app = [];
+        $this->pageParams = $pageParams;
     }
 
     public static function getInstance()
@@ -25,19 +29,23 @@ class Core
 
     public function Initialize()
     {
+        session_start();
         $this->db = new DB(DATABASE_HOST, DATABASE_LOGIN, DATABASE_PASSWORD, DATABASE_BASENAME);
+        $this->requestMethod = $_SERVER['REQUEST_METHOD'];
     }
 
     public function Run()
     {
-        $route = $_GET['route'] ?? '';
-        $routeParts = explode('/', $route);
-        $moduleName = strtolower(array_shift($routeParts));
-        $actionName = strtolower(array_shift($routeParts));
+        if (!empty($_GET['route'])) {
+            $routeParts = explode('/', $_GET['route']);
+            $moduleName = strtolower(array_shift($routeParts));
+            $actionName = strtolower(array_shift($routeParts));
+        }
 
         if (empty($moduleName)) {
             $moduleName = 'main';
         }
+
         if (empty($actionName)) {
             $actionName = 'index';
         }
@@ -72,6 +80,7 @@ class Core
         $pathToLayout = 'themes/light/layout.php';
         $tpl = new Template($pathToLayout);
         $tpl->setParam('content', $this->app['actionResult']);
+        $tpl->setParams($this->pageParams);
         $html = $tpl->getHTML();
         echo $html;
     }

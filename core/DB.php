@@ -2,6 +2,9 @@
 
 namespace core;
 
+/**
+ * Class for execution query to DB
+ */
 class DB
 {
     protected $pdo;
@@ -11,7 +14,14 @@ class DB
         $this->pdo = new \PDO("mysql: host={$hostname};dbname={$database}", $login, $password);
     }
 
-    public function select($tableName, $fieldList = '*', $conditionArray = null)
+    /**
+     * Execution query for get data from chosen table in DB
+     * @param string $tableName Table name of DB
+     * @param string|array $fieldList List of fields
+     * @param array|null $conditionArray Assoc array with condition to search
+     * @return array|false
+     */
+    public function select(string $tableName, string|array $fieldList = '*', array|null $conditionArray = null)
     {
         if (is_string($fieldList)) {
             $fieldsListString = $fieldList;

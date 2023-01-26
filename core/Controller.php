@@ -5,12 +5,14 @@ namespace core;
 class Controller
 {
     protected $viewPath;
+    protected $moduleName;
+    protected $actionName;
 
     public function __construct()
     {
-        $moduleName = Core::getInstance()->app['moduleName'];
-        $actionName = Core::getInstance()->app['actionName'];
-        $this->viewPath = "views/{$moduleName}/{$actionName}.php";
+        $this->moduleName = Core::getInstance()->app['moduleName'];
+        $this->actionName = Core::getInstance()->app['actionName'];
+        $this->viewPath = "views/{$this->moduleName}/{$this->actionName}.php";
     }
 
     public function render($viewPath = null, $params = null)
@@ -19,6 +21,22 @@ class Controller
             $viewPath = $this->viewPath;
         }
         $tpl = new Template($viewPath);
+        if (!empty($params)) {
+            $tpl->setParams($params);
+        }
+        return $tpl->getHTML();
+    }
+
+    public function redirect($url)
+    {
+        header("Location: {$url}");
+        die();
+    }
+
+    public function renderView($viewName)
+    {
+        $view = "views/$this->moduleName/{$viewName}.php";
+        $tpl = new Template($view);
         if (!empty($params)) {
             $tpl->setParams($params);
         }
