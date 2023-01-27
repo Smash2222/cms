@@ -1,0 +1,12 @@
+.form-signin {
+    max-width: 350px;
+}
+
+.error {
+    color: red;
+}
+
+.bi {
+    vertical-align: -.125em;
+    fill: currentColor;
+}

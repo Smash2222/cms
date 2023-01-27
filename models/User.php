@@ -77,4 +77,10 @@ class User
     {
         return $_SESSION['user'];
     }
+
+    public static function isAdmin()
+    {
+        $user = self::getCurrentAuthenticatedUser();
+        return $user['access_level'] === 10;
+    }
 }

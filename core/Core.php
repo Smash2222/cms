@@ -60,7 +60,7 @@ class Core
             $controller = new $controllerName();
 
             if (method_exists($controller, $controllerActionName)) {
-                $this->app['actionResult'] = $controller->$controllerActionName();
+                $this->pageParams['content'] = $controller->$controllerActionName();
             } else {
                 $statusCode = 404;
             }
@@ -71,7 +71,7 @@ class Core
         $statusCodeType = (int)($statusCode / 100);
         if ($statusCodeType === 4 || $statusCodeType === 5) {
             $mainController = new MainController();
-            $mainController->errorAction($statusCode);
+            $this->pageParams['content'] = $mainController->errorAction($statusCode);
         }
     }
 
@@ -79,7 +79,6 @@ class Core
     {
         $pathToLayout = 'themes/light/layout.php';
         $tpl = new Template($pathToLayout);
-        $tpl->setParam('content', $this->app['actionResult']);
         $tpl->setParams($this->pageParams);
         $html = $tpl->getHTML();
         echo $html;

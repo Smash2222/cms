@@ -2,18 +2,20 @@
 
 namespace controllers;
 
-class MainController
+use core\Controller;
+
+class MainController extends Controller
 {
     public function indexAction()
     {
-        echo 'Main page';
+        return $this->render();
     }
 
     public function errorAction($code)
     {
         switch ($code) {
             case 404:
-                echo 'Error 404. Not found';
+                return $this->render('views/main/error.php');
                 break;
         }
     }
