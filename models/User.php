@@ -14,11 +14,16 @@ class User
         \core\Core::getInstance()->db->insert(
             self::$tableName, [
                 'login' => $login,
-                'password' => $password,
+                'password' => self::hashPassword($password),
                 'lastname' => $lastname,
                 'firstname' => $firstname
             ]
         );
+    }
+
+    public static function hashPassword($password)
+    {
+        return md5($password);
     }
 
     public static function updateUser($id, $updatesArray)
@@ -50,7 +55,7 @@ class User
     {
         $user = Core::getInstance()->db->select(self::$tableName, '*', [
             'login' => $login,
-            'password' => $password
+            'password' => self::hashPassword($password),
         ]);
         if (!empty($user)) {
             return $user[0];

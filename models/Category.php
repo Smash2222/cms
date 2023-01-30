@@ -10,8 +10,11 @@ class Category
 
     public static function addCategory($name, $photoPath)
     {
-        $fileName = '123asd4g45y4.jpg';
-        $newPath = "files/category/{$fileName}";
+        do {
+            $fileName = uniqid() . '.jpg';
+            $newPath = "files/category/{$fileName}";
+        } while (file_exists($newPath));
+
         move_uploaded_file($photoPath, $newPath);
         Core::getInstance()->db->insert(self::$tableName, [
             'name' => $name,
@@ -19,9 +22,29 @@ class Category
         ]);
     }
 
+    public static function changePhoto($id, $newPhoto)
+    {
+        $row = self::getCategoryById($id);
+        $photoPath = 'files/category/' . $row['photo'];
+        if (is_file($photoPath)) {
+            unlink($photoPath);
+        }
+        do {
+            $fileName = uniqid() . '.jpg';
+            $newPath = "files/category/{$fileName}";
+        } while (file_exists($newPath));
+
+        move_uploaded_file($newPhoto, $newPath);
+        Core::getInstance()->db->update(self::$tableName, [
+            'photo' => $fileName
+        ], [
+            'id' => $id
+        ]);
+    }
+
     public static function getCategoryById($id)
     {
-        $rows = Core::getInstance()->db->select(self::$tableName, [
+        $rows = Core::getInstance()->db->select(self::$tableName, '*', [
             'id' => $id
         ]);
         if (!empty($rows)) {
