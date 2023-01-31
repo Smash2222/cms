@@ -14,7 +14,7 @@
                    aria-describedby="emailHelp">
             <?php
             if (!empty($errors['login'])) : ?>
-                <div id="emailHelp" class="form-text"><?= $errors['login'] ?></div>
+                <div id="emailHelp" class="form-text" text-danger><?= $errors['login'] ?></div>
             <?php
             endif; ?>
         </div>
@@ -24,7 +24,7 @@
                    value="<?= $model['password'] ?? '' ?>" aria-describedby="passwordHelp">
             <?php
             if (!empty($errors['password'])) : ?>
-                <div id="passwordHelp" class="form-text"><?= $errors['password'] ?></div>
+                <div id="passwordHelp" class="form-text text-danger"><?= $errors['password'] ?></div>
             <?php
             endif; ?>
         </div>
@@ -34,7 +34,7 @@
                    value="<?= $model['password2'] ?? '' ?>" aria-describedby="password2Help">
             <?php
             if (!empty($errors['password2'])) : ?>
-                <div id="password2Help" class="form-text"><?= $errors['password2'] ?></div>
+                <div id="password2Help" class="form-text text-danger"><?= $errors['password2'] ?></div>
             <?php
             endif; ?>
         </div>
@@ -44,7 +44,7 @@
                    value="<?= $model['lastname'] ?? '' ?>" aria-describedby="lastnameHelp">
             <?php
             if (!empty($errors['lastname'])) : ?>
-                <div id="lastnameHelp" class="form-text"><?= $errors['lastname'] ?></div>
+                <div id="lastnameHelp" class="form-text text-danger"><?= $errors['lastname'] ?></div>
             <?php
             endif; ?>
         </div>
@@ -54,7 +54,7 @@
                    value="<?= $model['firstname'] ?? '' ?>" aria-describedby="firstnameHelp">
             <?php
             if (!empty($errors['firstname'])) : ?>
-                <div id="firstnameHelp" class="form-text"><?= $errors['firstname'] ?></div>
+                <div id="firstnameHelp" class="form-text text-danger"><?= $errors['firstname'] ?></div>
             <?php
             endif; ?>
         </div>

@@ -1,11 +1,16 @@
 <?php
 /** @var array $category */
+/** @var array $model */
+/** @var array $errors */
 ?>
 <h2>Edit category</h2>
 <form action="" method="post" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="name" class="form-label">Category name</label>
         <input type="text" class="form-control" id="name" name="name" value="<?= $category['name'] ?>">
+        <?php if (!empty($errors['name'])) : ?>
+            <div class="form-text text-danger"><?= $errors['name'] ?></div>
+        <?php endif; ?>
     </div>
     <div class="col-3">
     <?php $filePath = 'files/category/' . $category['photo']; ?>
