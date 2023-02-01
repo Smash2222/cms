@@ -5,6 +5,7 @@ namespace controllers;
 use core\Controller;
 use core\Core;
 use models\Category;
+use models\Product;
 use models\User;
 
 class CategoryController extends Controller
@@ -113,4 +114,14 @@ class CategoryController extends Controller
         }
     }
 
+    public function viewAction($params)
+    {
+        $id = intval($params[0]);
+        $category = Category::getCategoryById($id);
+        $products = Product::getProductsInCategory($id);
+        return $this->render(null, [
+            'category' => $category,
+            'products' => $products,
+        ]);
+    }
 }

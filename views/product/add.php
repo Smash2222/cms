@@ -2,6 +2,7 @@
 /** @var array $model */
 /** @var array $errors */
 /** @var array $categories */
+/** @var int|null $category_id */
 ?>
 <h2>Adding product</h2>
 <form action="" method="post" enctype="multipart/form-data">
@@ -17,7 +18,7 @@
         <label for="name" class="form-label">Choose category for product</label>
         <select class="form-control" id="category_id" name="category_id">
             <?php foreach ($categories as $category) : ?>
-            <option value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
+            <option <?php if ($category['id'] == $category_id) echo 'selected'?> value="<?= $category['id'] ?>"><?= $category['name'] ?></option>
             <?php endforeach; ?>
         </select>
         <?php if (!empty($errors['category_id'])) : ?>

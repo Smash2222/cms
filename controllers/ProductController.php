@@ -14,8 +14,12 @@ class ProductController extends Controller
         return $this->render();
     }
 
-    public function addAction()
+    public function addAction($params)
     {
+        $category_id = intval($params[0]);
+        if (empty($category_id)) {
+            $category_id = null;
+        }
         $categories = Category::getCategories();
         if (Core::getInstance()->requestMethod === 'POST') {
             $errors = [];
@@ -41,14 +45,23 @@ class ProductController extends Controller
                     'errors' => $errors,
                     'model' => $model,
                     'categories' => $categories,
+                    'category_id' => $category_id
                 ]);
             }
         }
 
         return $this->render(null, [
             'categories' => $categories,
+            'category_id' => $category_id
         ]);
     }
 
-
+    public function viewAction($params)
+    {
+        $id = intval($params[0]);
+        $product = Product::getProductById($id);
+        return $this->render(null, [
+            'product' => $product,
+        ]);
+    }
 }

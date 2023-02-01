@@ -1,7 +1,6 @@
 <?php
 
-use core\DB;
-use models\User;
+error_reporting(E_ERROR);
 
 include('config/database.php');
 include('config/params.php');
